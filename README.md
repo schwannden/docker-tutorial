@@ -9,3 +9,7 @@ a tutorial projects to teach company's colleague about docker and various techno
 5. Deploy fastapi backend with docker-compose
 6. Deploy backend and database with docker-compose
 
+# How to Use This Project
+1. create and activate your own virtual environemnt
+2. `make setup`
+
