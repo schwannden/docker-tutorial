@@ -8,6 +8,7 @@ authors = ["Schwannden Kuo <schwannden@mobagel.com>"]
 python = "^3.8"
 uvicorn = "^0.18.2"
 fastapi = "^0.79.1"
+beanie = "^1.11.10"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
