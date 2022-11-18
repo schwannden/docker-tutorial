@@ -1,0 +1,28 @@
+version: "3.8"
+volumes:
+  mongo-volume:
+    name: mongo-volume
+networks:
+  app-network:
+    name: app-network
+
+services:
+  mongo:
+    container_name: mongo
+    image: mongo:latest
+    environment:
+      - MONGO_INITDB_ROOT_PASSWORD=admin-password
+      - MONGO_INITDB_ROOT_USERNAME=admin-user
+    networks:
+      - app-network
+    volumes:
+      - mongo-volume:/data/db
+  backend:
+    image: backend:0.1.0
+    networks:
+      - app-network
+    volumes:
+      - ${PWD}/backend:/app:ro
+    ports:
+      - 8000:8000
+

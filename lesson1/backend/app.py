@@ -17,6 +17,16 @@ async def init():
 app = FastAPI(on_startup=[init])
 
 
+@app.get("/")
+async def get():
+    import socket
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s.connect(("8.8.8.8", 80))
+    ip = s.getsockname()[0]
+    s.close()
+    return ip 
+
+
 @app.post("/")
 async def create(name: str = "world"):
     message = Greeting(message=f"Hello {name}!")

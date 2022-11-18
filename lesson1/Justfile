@@ -1,3 +1,7 @@
+# help
+default:
+	just -l
+
 # install poetry
 setup:
 	pip install --upgrade pip
@@ -7,23 +11,11 @@ setup:
 build:
 	docker build . -t "backend:$$(poetry version -s)"
 
-# create network
-create-network:
-	docker network inspect app-network >/dev/null 2>&1 || docker network create app-network
-
-# deploy mongo
-start-db: create-network
-	docker run --network=app-network --name mongo -e MONGO_INITDB_ROOT_USERNAME=admin-user -e MONGO_INITDB_ROOT_PASSWORD=admin-password -v mongo-volume:/data/db -d mongo:latest
-
-# stop mongo
-stop-db:
-	docker rm -f mongo
-
 # deploy from docker image
-deploy port="8000": create-network start-db
-	docker run --network=app-network -d --rm -p {{port}}:8000 -v "${PWD}/backend:/app:ro" --name backend "backend:$(poetry version -s)"
+deploy:
+	docker-compose up -d
 
 # stop backend
-stop: stop-db
-	docker rm -f backend
+stop:
+	docker-compose down
 
